@@ -1,3 +1,5 @@
+
+ //exemple to silence warning
 pub struct Analogstick {
     lx: u8,
     ly: u8,
@@ -15,6 +17,14 @@ struct Analog {
     stick: Analogstick,
 }
 
+
+/*
+bit field ???
+uint8_t right : 1;
+uint8_t: Ensures the underlying storage is exactly 8 bits (1 byte), providing portability across different platforms. 
+right : 1: Specifies that this variable uses only 1 bit of that byte, allowing it to store either 0 or 1.  
+wtf mdrrr
+*/
 struct Button {
     up: u8,
     down: u8,
@@ -96,3 +106,4 @@ struct Controller {
     event: Event,
     output: Command,
 }
+
