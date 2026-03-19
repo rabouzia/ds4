@@ -1,6 +1,7 @@
-[package]
-name = "ds4"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = [ 
+  "ds4",
+  "utils",
+]
 
-[dependencies]
+resolver = "3"

@@ -1,5 +1,4 @@
-
- //exemple to silence warning
+//exemple to silence warning
 pub struct Analogstick {
     lx: u8,
     ly: u8,
@@ -17,12 +16,11 @@ struct Analog {
     stick: Analogstick,
 }
 
-
 /*
 bit field ???
 uint8_t right : 1;
-uint8_t: Ensures the underlying storage is exactly 8 bits (1 byte), providing portability across different platforms. 
-right : 1: Specifies that this variable uses only 1 bit of that byte, allowing it to store either 0 or 1.  
+uint8_t: Ensures the underlying storage is exactly 8 bits (1 byte), providing portability across different platforms.
+right : 1: Specifies that this variable uses only 1 bit of that byte, allowing it to store either 0 or 1.
 wtf mdrrr
 */
 struct Button {
@@ -77,15 +75,17 @@ struct Sensor {
     gyroscope: Gyroscope,
 }
 
-struct Command {
-    small_rumble: u8,
-    large_rumble: u8,
-    r: u8,
-    g: u8,
-    b: u8,
-    flash_off: u8,
-    flash_on: u8,
+#[derive(Default, Debug)]
+pub struct Command {
+    pub small_rumble: u8,
+    pub large_rumble: u8,
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
+    pub flash_off: u8,
+    pub flash_on: u8,
 }
+
 
 struct Event {
     button_down: Button,
@@ -106,4 +106,3 @@ struct Controller {
     event: Event,
     output: Command,
 }
-
