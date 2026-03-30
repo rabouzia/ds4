@@ -6,6 +6,8 @@ edition = "2024"
 [dependencies]
 bitflags = "2.11.0"
 derive_more = { version = "2.1.1", features = ["constructor"] }
-hidapi = { version = "2.6.5", features = ["macos-shared-device","windows-native"] }
+hidapi = { version = "2.6.5", features = [
+    "macos-shared-device",
+    "windows-native",
+] }
 mouse-rs = "0.4.2"
-# resolver = "3"

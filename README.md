@@ -1,7 +1,7 @@
 # ds4-driver
  
 A DualShock 4 driver written in Rust, built to run everywhere.
- 
+
 ## Goal
  
 Most controller libraries lock you into one platform or hide the raw data behind abstractions. This driver works directly with HID reports, giving you full control over every button, stick, trigger, gyroscope, and LED — the same way on every target.
@@ -11,7 +11,7 @@ Most controller libraries lock you into one platform or hide the raw data behind
 | Platform | Transport | Status |
 |----------|-----------|--------|
 | macOS/Windows/Linux | Bluetooth / USB via `hidapi` | In progress |
-| ESP (embedded) | Bare metal | Planned |
+| ESP/STM (embedded) | Bare metal | Planned |
  
 ## Architecture
  

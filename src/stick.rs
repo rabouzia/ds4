@@ -1,9 +1,9 @@
+
 use derive_more::Constructor;
 use mouse_rs::Mouse;
 
 #[derive(Constructor)]
 pub struct Analog {
-    button: u8,
     x: u8,
     y: u8,
 }
@@ -12,11 +12,13 @@ pub struct Stick {
     r3: Analog,
 }
 
+
+
 impl Stick {
-    pub fn new(buf: &[u8; 10]) -> Self {
+    pub fn new(buf: &[u8; 78]) -> Self {
         Self {
-            l3: Analog::new(0, buf[1], buf[2]),
-            r3: Analog::new(0, buf[3], buf[4]),
+            l3: Analog::new(buf[1], buf[2]),
+            r3: Analog::new(buf[3], buf[4]),
         }
     }
     pub fn print(&self) {
@@ -25,12 +27,19 @@ impl Stick {
         if self.r3.x > 0 {}
         if self.r3.y > 0 {}
     }
-    pub fn use_as_mouse(&self, buf: [u8; 10], sensitivity: f32) {
-        let h: i32 = 2056;
-        let l: i32 = 1329;
+    pub fn use_as_mouse(&self, buf: [u8; 78], sensitivity: f32) {
+        // let h: i32 = 2056;
+        // let l: i32 = 1329;
         let mouse = Mouse::new();
-        let dx = (buf[1] as f32 - 127.0) / 127.0;
-        let dy = (buf[2] as f32 - 127.0) / 127.0;
+        let mut dx = (buf[1] as f32 - 127.0) / 127.0;
+        let mut dy = (buf[2] as f32 - 127.0) / 127.0;
+
+        let len2: f32 = dx * dx + dy * dy;
+        let dist: f32 = len2.sqrt();
+        if dist < 0.25 {
+            dx = 0.0;
+            dy = 0.0;
+        }
 
         let move_x = (dx * sensitivity) as i32;
         let move_y = (dy * sensitivity) as i32;
