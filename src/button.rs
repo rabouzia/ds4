@@ -1,9 +1,10 @@
 use bitflags::bitflags;
 
-bitflags! {
+use crate::button;
 
-  #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-  pub struct Button: u8 {
+bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct Button: u8 {
 
     const square    = 0b0001_0000;
     const cross     = 0b0010_0000;
@@ -39,6 +40,7 @@ bitflags! {
 }
 
 impl Button {
+
     pub fn print(&self) {
         if self.contains(Button::square) {
             print!("⏹");

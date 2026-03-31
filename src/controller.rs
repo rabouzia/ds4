@@ -1,6 +1,12 @@
 use std::{fs::TryLockError, str::from_utf8};
 
-use crate::{button::Button, event::Event, sensor::Sensor, sound::Sound, stick::Stick};
+use crate::{
+    button::Button,
+    event::Event,
+    sensor::{Accelerometer, Sensor},
+    sound::Sound,
+    stick::Stick,
+};
 // use derive_more::Constructor;
 
 pub struct Trigger {
@@ -8,10 +14,10 @@ pub struct Trigger {
     r2: u8,
 }
 pub struct Controller {
-    // sensor: Sensor,
-    // sound: Sound,
-    // event: Event,
-    // button: Button,
+    pub sensor: Sensor,
+    //pub sound: Sound,
+    //pub event: Event,
+    //pub button: Button,
     pub stick: Stick,
     pub trigger: Trigger,
 }
@@ -40,6 +46,7 @@ impl Controller {
                 l2: buf[8],
                 r2: buf[9],
             },
+            sensor: Sensor::new(buf),
             // button: Button::new(),
         }
     }
