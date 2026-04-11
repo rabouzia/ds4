@@ -16,29 +16,6 @@ fn set_buf(device: &HidDevice) {
     let _ = device.send_feature_report(&enable_buf);
 }
 
-/*
-    buf = [0] * 78
-    buf[0]  = 0x11    # report ID
-    buf[1]  = 0xC0    # bluetooth header
-    buf[2]  = 0x00    # reserved
-    buf[3]  = 0x07    # enable rumble + LED flags
-
-
-
-    if bluetooth:
-        # bluetooth CRC must include 0xA2 prefix (not sent, only for checksum)
-        crc_data = [0xA2] + buf[:74]
-        checksum = crc32(crc_data)
-        buf[74] = checksum & 0xFF
-        buf[75] = (checksum >> 8) & 0xFF
-        buf[76] = (checksum >> 16) & 0xFF
-        buf[77] = (checksum >> 24) & 0xFF
-    # USB: no CRC needed, controller accepts report as-is
-
-    device.write(bytes(buf))
-
-*/
-
 // bt :1476 , usb : 0x05C4
 fn main() {
     let api = HidApi::new().unwrap();
@@ -62,6 +39,6 @@ fn main() {
         // manette.sensor.accelerometer.print();
         // manette.sensor.gyroscope.print();
 
-        // }
+    
     }
 }

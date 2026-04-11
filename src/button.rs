@@ -1,6 +1,6 @@
 use bitflags::bitflags;
 
-use crate::button;
+// use crate::button;
 
 bitflags! {
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -11,7 +11,7 @@ bitflags! {
     const circle    = 0b0100_0000;
     const triangle  = 0b1000_0000;
 
-    const up        = 0b0000_0000;
+    const up        = 0b0000_0001;
     const down      = 0b0000_0100;
     const right     = 0b0000_0010;
     const left      = 0b0000_0110;
@@ -40,70 +40,35 @@ bitflags! {
 }
 
 impl Button {
+    const BUTTON_MAP: &'static [(Button, &'static str)] = &[
+        (Button::square, "□"),
+        (Button::cross, "✕"),
+        (Button::circle, "○"),
+        (Button::triangle, "🔼"),
+        (Button::up, "⬆️"),
+        (Button::down, "⬇️"),
+        (Button::right, "➡️"),
+        (Button::left, "⬅️"),
+        (Button::upright, "↗️"),
+        (Button::upleft, "↖️"),
+        (Button::downright, "↘️"),
+        (Button::downleft, "↙️"),
+        (Button::l1, "L1"),
+        (Button::r1, "R1"),
+        (Button::l3, "L3"),
+        (Button::r3, "R3"),
+        (Button::share, "SHARE"),
+        (Button::option, "OPTION"),
+        (Button::ps, "PS"),
+        (Button::touchpad, "PAD"),
+    ];
 
     pub fn print(&self) {
-        if self.contains(Button::square) {
-            print!("⏹");
+        for (btn, label) in Self::BUTTON_MAP {
+            if self.contains(*btn) {
+                print!("{label} ");
+            }
         }
-        if self.contains(Button::cross) {
-            print!("X");
-        }
-        if self.contains(Button::circle) {
-            print!("⭕️");
-        }
-        if self.contains(Button::triangle) {
-            print!("🔼");
-        }
-        if self.contains(Button::up) {
-            print!("⬆️");
-        }
-        if self.contains(Button::down) {
-            print!("⬇️");
-        }
-        if self.contains(Button::right) {
-            print!("➡️");
-        }
-        if self.contains(Button::left) {
-            print!("⬅️");
-        }
-        if self.contains(Button::upright) {
-            print!("↗️");
-        }
-        if self.contains(Button::upleft) {
-            print!("↖️");
-        }
-        if self.contains(Button::downright) {
-            print!("↘️");
-        }
-        if self.contains(Button::downleft) {
-            print!("↙️");
-        }
-        if self.contains(Button::l1) {
-            print!("L1");
-        }
-        if self.contains(Button::r1) {
-            print!("R1");
-        }
-        if self.contains(Button::l3) {
-            print!("L3");
-        }
-        if self.contains(Button::r3) {
-            print!("R3");
-        }
-        if self.contains(Button::share) {
-            print!("SHARE");
-        }
-        if self.contains(Button::option) {
-            print!("OPTION");
-        }
-        if self.contains(Button::ps) {
-            print!("PS");
-        }
-        if self.contains(Button::touchpad) {
-            print!("PAD");
-        }
-
         println!();
-        // todo!()
     }
 }

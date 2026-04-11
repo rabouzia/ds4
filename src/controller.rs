@@ -1,6 +1,6 @@
 use crate::{
     button::Button,
-    event::{self, Color, Event, Flash, Rumble},
+    event::{Color, Event, Flash, Rumble},
     sensor::{Accelerometer, Sensor},
     sound::Sound,
     stick::Stick,
@@ -15,11 +15,17 @@ struct Status {
 }
 
 impl Status {
-    pub fn battery_percentage(buf: u8) {
+    pub fn new() -> Self {
+        Self {
+            battery: 0,
+            charging: 0,
+        }
+    }
+    pub fn battery_percentage(&self, buf: u8) {
         let raw = buf & 0x0F; // 0-15
         println!("battery lvl is {}", ((raw as f32 / 15.0) * 100.0) as u8);
     }
-    pub fn is_charging(buf: u8) {
+    pub fn is_charging(&self, buf: u8) {
         println!("is charging {}", (buf & 0xF0) >> 4 == 1);
     }
 }
@@ -30,12 +36,12 @@ pub struct Trigger {
 }
 pub struct Controller {
     pub sensor: Sensor,
-    // pub status: Status,
-    //pub sound: Sound,
+    // pub sound: Sound,
     pub event: Event,
-    //pub button: Button,
+    pub button: Button,
     pub stick: Stick,
     pub trigger: Trigger,
+    pub status: Status,
     pub packet: [u8; 78],
 }
 
@@ -70,22 +76,28 @@ impl Controller {
                 flash: Flash { off: 0, on: 0 },
             },
             packet: Self::build_packet(),
-            // button: Button::new(),
+            button: Button::empty(),
+            status: Status::new(),
         }
     }
     pub fn battery(&self) {
-        todo!()
+        // buf[12] → battery level
+        // buf[30] → charging
+        self.status.battery_percentage(self.packet[12]);
+        self.status.is_charging(self.packet[30]);
     }
     fn build_packet() -> [u8; 78] {
         let mut buf = [0u8; 78];
+        let mut crc_input = [0u8; 75];
+
         buf[0] = 0x11;
         buf[1] = 0xC0;
         buf[2] = 0x00;
         buf[3] = 0x07;
 
-        let mut crc_input = [0u8; 75];
         crc_input[0] = 0xA2;
         crc_input[1..].copy_from_slice(&buf[..74]);
+
         let checksum = hash(&crc_input);
         buf[74] = (checksum & 0xFF) as u8;
         buf[75] = ((checksum >> 8) & 0xFF) as u8;
@@ -95,7 +107,6 @@ impl Controller {
     }
 
     pub fn send_data(mut self, device: &HidDevice, colored: &str, rumble: &str, flash: &str) {
-       
         let (r, g, b) = self.event.rgb(colored);
         let (s, l) = self.event.rumble(rumble);
         let (f1, f2) = self.event.flash(flash);

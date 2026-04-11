@@ -19,9 +19,7 @@ pub struct Event {
     pub rumble: Rumble,
 }
 
-//  buf[7]  = r       # LED red   (0-255)
-//  buf[8]  = g       # LED green (0-255)
-//  buf[9]  = b       # LED blue  (0-255)
+// TODO change &str into enum to be more efficient
 
 impl Event {
     pub fn rumble(&self, level: &str) -> (u8, u8) {
