@@ -1,0 +1,12 @@
+[package]
+name = "ds4-embedded"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ds4-core = { path = "../ds4-core" }
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
+defmt = "0.3"
+# panic-defmt = "0.1"
+# Add your HAL later: stm32f4xx-hal, rp2040-hal, etc.

@@ -1,0 +1,10 @@
+[package]
+name = "ds4-desktop"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ds4-core = { path = "../ds4-core" }
+hidapi = "2.4"          # or serialport, bluetooth-hci, etc.
+clap = { version = "4", features = ["derive"] }
+env_logger = "0.10"

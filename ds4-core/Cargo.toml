@@ -1,0 +1,14 @@
+[package]
+name = "ds4-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bitflags = "2.11.0"
+crc32fast = "1.5.0"
+derive_more = { version = "2.1.1", features = ["constructor"] }
+hidapi = { version = "2.6.5", default-features = false,features = [
+    "macos-shared-device",
+    "windows-native","linux-native"
+] }
+mouse-rs = "0.4.2"
